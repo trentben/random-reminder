@@ -11,19 +11,28 @@ import com.redpill.reminders.model.Reminder;
 
 import java.util.List;
 
+import io.realm.RealmChangeListener;
+import io.realm.RealmResults;
+
 public class ReminderListAdapter extends RecyclerView.Adapter<ReminderHolder> {
 
     private ObjectCallback<Reminder> mOnClickListener;
     private OnOptionClickListener mOnOptionClickListener;
 
-    private List<Reminder> mReminders;
+    private RealmResults<Reminder> mReminders;
 
     public ReminderListAdapter() {
 
     }
 
-    public void setReminderList(List<Reminder> reminders) {
+    public void setReminderList(RealmResults<Reminder> reminders) {
         mReminders = reminders;
+        mReminders.addChangeListener(new RealmChangeListener<RealmResults<Reminder>>() {
+            @Override
+            public void onChange(RealmResults<Reminder> element) {
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override

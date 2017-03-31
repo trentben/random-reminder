@@ -22,6 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.realm.RealmResults;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,6 +55,12 @@ public class ReminderListFragment extends Fragment implements ReminderListView{
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        mPresenter.onStart();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         mUnbinder.unbind();
@@ -81,6 +88,11 @@ public class ReminderListFragment extends Fragment implements ReminderListView{
     //View Methods
 
     @Override
+    public void setReminders(RealmResults<Reminder> reminders) {
+        mAdapter.setReminderList(reminders);
+    }
+
+    @Override
     public void addReminder(Reminder reminder) {
         mReminders.add(reminder);
         mAdapter.notifyDataSetChanged();
@@ -105,7 +117,6 @@ public class ReminderListFragment extends Fragment implements ReminderListView{
 
         mAdapter = new ReminderListAdapter();
         mReminders = new ArrayList<>();
-        mAdapter.setReminderList(mReminders);
         mAdapter.setOnOptionClickListener(this::onReminderOptionClick);
         mAdapter.setOnClickListener(this::onReminderItemClick);
 
