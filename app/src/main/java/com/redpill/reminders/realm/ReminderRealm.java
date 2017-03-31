@@ -25,4 +25,12 @@ public class ReminderRealm {
             realm.copyToRealm(reminder);
         });
     }
+
+    public Reminder getReminderById(int reminderId) {
+        return mRealm.where(Reminder.class).equalTo("id", reminderId).findAll().first();
+    }
+
+    public Realm getRealm() {
+        return mRealm;
+    }
 }

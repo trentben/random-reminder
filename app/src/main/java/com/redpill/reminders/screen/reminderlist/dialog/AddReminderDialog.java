@@ -12,6 +12,9 @@ import com.redpill.reminders.R;
 import com.redpill.reminders.callback.ObjectCallback;
 import com.redpill.reminders.model.Reminder;
 
+import java.util.Calendar;
+import java.util.Random;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -35,6 +38,7 @@ public class AddReminderDialog extends DialogFragment {
         if (mReminderCallback != null) {
             Reminder reminder = new Reminder();
             reminder.setTitle(mTitleEdit.getText().toString());
+            reminder.setRemindAt(getRandomTime());
             mReminderCallback.onCallback(reminder);
         }
         dismiss();
@@ -48,5 +52,18 @@ public class AddReminderDialog extends DialogFragment {
     public AddReminderDialog setOnReminderCallback(ObjectCallback<Reminder> callback) {
         mReminderCallback = callback;
         return this;
+    }
+
+    private long getRandomTime() {
+        Calendar time = Calendar.getInstance();
+
+        Random random = new Random();
+        int randHours = random.nextInt(4);
+        int randMin = random.nextInt(60);
+
+        time.add(Calendar.HOUR, randHours);
+        time.add(Calendar.MINUTE, randMin);
+
+        return time.getTimeInMillis();
     }
 }

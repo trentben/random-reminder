@@ -27,12 +27,7 @@ public class ReminderListAdapter extends RecyclerView.Adapter<ReminderHolder> {
 
     public void setReminderList(RealmResults<Reminder> reminders) {
         mReminders = reminders;
-        mReminders.addChangeListener(new RealmChangeListener<RealmResults<Reminder>>() {
-            @Override
-            public void onChange(RealmResults<Reminder> element) {
-                notifyDataSetChanged();
-            }
-        });
+        mReminders.addChangeListener(element -> notifyDataSetChanged());
     }
 
     @Override

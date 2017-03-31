@@ -30,6 +30,7 @@
             tools:text="Schedule a lunch with Miguel"/>
 
         <TextView
+            android:id="@+id/last_reminder_text"
             style="@style/Base.TextAppearance.AppCompat.Caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

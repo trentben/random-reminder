@@ -8,6 +8,10 @@ import com.redpill.reminders.R;
 import com.redpill.reminders.callback.ObjectCallback;
 import com.redpill.reminders.model.Reminder;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -15,6 +19,9 @@ import butterknife.OnClick;
 public class ReminderHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.title) TextView mTitleText;
+    @BindView(R.id.last_reminder_text) TextView mLastReminderText;
+
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy h:mm aa");
 
     private ObjectCallback<Reminder> mOnClickListener;
     private ReminderListAdapter.OnOptionClickListener mOnOptionClickListener;
@@ -31,6 +38,7 @@ public class ReminderHolder extends RecyclerView.ViewHolder {
     public void bind(Reminder reminder) {
         mReminder = reminder;
         mTitleText.setText(reminder.getTitle());
+        mLastReminderText.setText(DATE_FORMAT.format(new Date(reminder.getRemindAt())));
     }
 
     public void setOnClickListener(ObjectCallback<Reminder> listener) {
