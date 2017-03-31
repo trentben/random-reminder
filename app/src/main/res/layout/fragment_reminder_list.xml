@@ -15,6 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
+        android:src="@drawable/ic_plus_white"
         app:fabSize="normal"
         app:useCompatPadding="true"
         app:layout_anchor="@id/reminder_list"

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="6dp">
+
+    <TextView
+        style="@style/Base.TextAppearance.AppCompat.Title"
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_reminder"/>
+
+    <EditText
+        android:id="@+id/title_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/title"
+        android:hint="Title"/>
+
+    <Button
+        style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+        android:id="@+id/add_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_edit"
+        android:layout_alignParentEnd="true"
+        android:text="@string/add"/>
+    <Button
+        style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+        android:id="@+id/cancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_below="@id/title_edit"
+        android:layout_toLeftOf="@id/add_button"
+        android:layout_toStartOf="@id/add_button"
+        android:text="@string/cancel"/>
+
+</RelativeLayout>
