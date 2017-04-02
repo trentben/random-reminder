@@ -19,12 +19,21 @@ public class AlarmScheduler {
     }
 
     public void scheduleAlarm(Reminder reminder) {
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, reminder.getId(), new Intent(mContext, AlarmReceiver.class), PendingIntent.FLAG_UPDATE_CURRENT);
-
-        AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-
-        alarmManager.set(0, reminder.getRemindAt(), pendingIntent);
+        getAlarmManager().set(0, reminder.getRemindAt(), buildPendingIntent(reminder));
     }
 
 
+    public void removeAlarm(Reminder reminder) {
+        getAlarmManager().cancel(buildPendingIntent(reminder));
+    }
+
+    private AlarmManager getAlarmManager() {
+        return (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+    }
+
+    private PendingIntent buildPendingIntent(Reminder reminder) {
+        Intent intent = new Intent(mContext, AlarmReceiver.class);
+        intent.putExtra(AlarmReceiver.REMINDER_ID, reminder.getId());
+        return PendingIntent.getBroadcast(mContext, reminder.getId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
 }

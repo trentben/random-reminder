@@ -20,6 +20,7 @@ public class ReminderHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.title) TextView mTitleText;
     @BindView(R.id.last_reminder_text) TextView mLastReminderText;
+    @BindView(R.id.options_btn) View mOptionButton;
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy h:mm aa");
 
@@ -59,7 +60,7 @@ public class ReminderHolder extends RecyclerView.ViewHolder {
     @OnClick(R.id.options_btn)
     public void onOptionClick() {
         if (mOnOptionClickListener != null) {
-            mOnOptionClickListener.onOptionClick(mReminder, mItemView);
+            mOnOptionClickListener.onOptionClick(mReminder, mOptionButton);
         }
     }
 }

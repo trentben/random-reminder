@@ -1,5 +1,6 @@
 package com.redpill.reminders.model;
 
+import java.util.Date;
 import java.util.UUID;
 
 import io.realm.RealmObject;
@@ -9,11 +10,13 @@ public class Reminder extends RealmObject {
 
     @Index
     private int id;
+    private long createdAt;
     private String title;
     private long remindAt;
 
     public Reminder() {
         id = UUID.randomUUID().hashCode();
+        createdAt = new Date().getTime();
     }
 
     public String getTitle() {
@@ -34,5 +37,9 @@ public class Reminder extends RealmObject {
 
     public int getId() {
         return id;
+    }
+
+    public long getCreatedAt() {
+        return createdAt;
     }
 }

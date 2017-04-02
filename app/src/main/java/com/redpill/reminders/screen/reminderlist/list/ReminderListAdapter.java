@@ -1,6 +1,7 @@
 package com.redpill.reminders.screen.reminderlist.list;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,5 +59,11 @@ public class ReminderListAdapter extends RecyclerView.Adapter<ReminderHolder> {
 
     public interface OnOptionClickListener {
         void onOptionClick(Reminder reminder, View view);
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        mReminders.removeAllChangeListeners();
     }
 }

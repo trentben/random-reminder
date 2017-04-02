@@ -16,6 +16,10 @@ public class ReminderListPresenter {
         mModel.addReminder(reminder);
     }
 
+    public void deleteReminder(Reminder reminder) {
+        mModel.deleteReminder(reminder);
+    }
+
     public void onStart() {
         mView.setReminders(mModel.getReminders());
 

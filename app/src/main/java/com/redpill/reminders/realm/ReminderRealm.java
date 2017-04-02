@@ -15,7 +15,7 @@ public class ReminderRealm {
 
     public RealmResults<Reminder> getReminders() {
         Realm realm = Realm.getDefaultInstance();
-        RealmResults<Reminder> results = realm.where(Reminder.class).findAll();
+        RealmResults<Reminder> results = realm.where(Reminder.class).findAllSorted("createdAt");
         realm.close();
         return results;
     }
@@ -32,5 +32,15 @@ public class ReminderRealm {
 
     public Realm getRealm() {
         return mRealm;
+    }
+
+    public void removeReminder(int id) {
+        Reminder reminder = getReminderById(id);
+        if (reminder != null) {
+            mRealm.executeTransaction(realm -> {
+                reminder.deleteFromRealm();
+            });
+
+        }
     }
 }

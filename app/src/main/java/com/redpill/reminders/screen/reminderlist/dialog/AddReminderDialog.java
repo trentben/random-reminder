@@ -11,6 +11,7 @@ import android.widget.EditText;
 import com.redpill.reminders.R;
 import com.redpill.reminders.callback.ObjectCallback;
 import com.redpill.reminders.model.Reminder;
+import com.redpill.reminders.util.Utility;
 
 import java.util.Calendar;
 import java.util.Random;
@@ -38,7 +39,7 @@ public class AddReminderDialog extends DialogFragment {
         if (mReminderCallback != null) {
             Reminder reminder = new Reminder();
             reminder.setTitle(mTitleEdit.getText().toString());
-            reminder.setRemindAt(getRandomTime());
+            reminder.setRemindAt(Utility.getRandomTime());
             mReminderCallback.onCallback(reminder);
         }
         dismiss();
@@ -54,16 +55,5 @@ public class AddReminderDialog extends DialogFragment {
         return this;
     }
 
-    private long getRandomTime() {
-        Calendar time = Calendar.getInstance();
 
-        Random random = new Random();
-        int randHours = random.nextInt(4);
-        int randMin = random.nextInt(60);
-
-        time.add(Calendar.HOUR, randHours);
-        time.add(Calendar.MINUTE, randMin);
-
-        return time.getTimeInMillis();
-    }
 }

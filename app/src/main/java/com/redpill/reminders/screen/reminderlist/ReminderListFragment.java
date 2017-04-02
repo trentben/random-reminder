@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -32,16 +33,8 @@ public class ReminderListFragment extends Fragment implements ReminderListView{
     @BindView(R.id.reminder_list) RecyclerView mReminderRecyView;
 
     private Unbinder mUnbinder;
-
-    private List<Reminder> mReminders;
     private ReminderListAdapter mAdapter;
-
     private ReminderListPresenter mPresenter;
-
-    public ReminderListFragment() {
-        // Required empty public constructor
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,9 +73,16 @@ public class ReminderListFragment extends Fragment implements ReminderListView{
     }
 
     private void onReminderOptionClick(Reminder reminder, View view) {
-        removeReminder(reminder);
-
         PopupMenu popupMenu = new PopupMenu(getContext(), view);
+        popupMenu.inflate(R.menu.list_item_menu);
+        popupMenu.setOnMenuItemClickListener(item -> {
+            if (R.id.delete == item.getItemId()) {
+                mPresenter.deleteReminder(reminder);
+                return true;
+            }
+            return false;
+        });
+        popupMenu.show();
     }
 
     //View Methods
@@ -92,18 +92,7 @@ public class ReminderListFragment extends Fragment implements ReminderListView{
         mAdapter.setReminderList(reminders);
     }
 
-    @Override
-    public void addReminder(Reminder reminder) {
-        mReminders.add(reminder);
-        mAdapter.notifyDataSetChanged();
 
-    }
-
-    @Override
-    public void removeReminder(Reminder reminder) {
-        mReminders.remove(reminder);
-        mAdapter.notifyDataSetChanged();
-    }
 
     //Fragment Methods
     private void init() {
@@ -116,7 +105,6 @@ public class ReminderListFragment extends Fragment implements ReminderListView{
         mReminderRecyView.setLayoutManager(layoutManager);
 
         mAdapter = new ReminderListAdapter();
-        mReminders = new ArrayList<>();
         mAdapter.setOnOptionClickListener(this::onReminderOptionClick);
         mAdapter.setOnClickListener(this::onReminderItemClick);
 

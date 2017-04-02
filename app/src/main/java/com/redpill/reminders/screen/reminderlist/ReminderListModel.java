@@ -29,4 +29,9 @@ public class ReminderListModel {
     public RealmResults<Reminder> getReminders() {
         return mRealm.getReminders();
     }
+
+    public void deleteReminder(Reminder reminder) {
+        mScheduler.removeAlarm(reminder);
+        mRealm.removeReminder(reminder.getId());
+    }
 }
