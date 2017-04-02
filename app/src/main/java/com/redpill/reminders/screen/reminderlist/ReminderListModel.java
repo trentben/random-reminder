@@ -4,26 +4,18 @@ import android.content.Context;
 
 import com.redpill.reminders.alarm.AlarmScheduler;
 import com.redpill.reminders.model.Reminder;
-import com.redpill.reminders.realm.ReminderRealm;
+import com.redpill.reminders.realm.ReminderManager;
 
 import io.realm.RealmResults;
 
 public class ReminderListModel {
 
     private Context mContext;
-    private ReminderRealm mRealm;
-    private AlarmScheduler mScheduler;
+    private ReminderManager mRealm;
 
     public ReminderListModel(Context context) {
         mContext = context;
-        mRealm = new ReminderRealm();
-        mScheduler = new AlarmScheduler(mContext);
-    }
-
-
-    public void addReminder(Reminder reminder) {
-        mRealm.addReminder(reminder);
-        mScheduler.scheduleAlarm(reminder);
+        mRealm = new ReminderManager(mContext);
     }
 
     public RealmResults<Reminder> getReminders() {
@@ -31,7 +23,6 @@ public class ReminderListModel {
     }
 
     public void deleteReminder(Reminder reminder) {
-        mScheduler.removeAlarm(reminder);
         mRealm.removeReminder(reminder.getId());
     }
 }

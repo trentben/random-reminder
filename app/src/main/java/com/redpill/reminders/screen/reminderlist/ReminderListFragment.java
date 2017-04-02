@@ -2,22 +2,20 @@ package com.redpill.reminders.screen.reminderlist;
 
 
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.redpill.reminders.R;
 import com.redpill.reminders.model.Reminder;
-import com.redpill.reminders.screen.reminderlist.dialog.AddReminderDialog;
+import com.redpill.reminders.screen.reminderlist.dialog.EditReminderDialog;
 import com.redpill.reminders.screen.reminderlist.list.ReminderListAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.redpill.reminders.util.Constant;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,13 +61,18 @@ public class ReminderListFragment extends Fragment implements ReminderListView{
 
     @OnClick(R.id.add_fab)
     public void onAddReminderClick() {
-        new AddReminderDialog()
-                .setOnReminderCallback(mPresenter::onAddReminder)
-                .show(getFragmentManager(), "add reminder");
+        new EditReminderDialog()
+                .show(getFragmentManager(), "addReminder");
     }
 
     private void onReminderItemClick(Reminder reminder) {
+        Bundle args = new Bundle();
+        args.putBoolean(Constant.FLAG_IS_UPDATE_MODE, true);
+        args.putInt(Constant.FLAG_REMINDER_ID, reminder.getId());
 
+        EditReminderDialog dialog = new EditReminderDialog();
+        dialog.setArguments(args);
+        dialog.show(getFragmentManager(), "updateReminder");
     }
 
     private void onReminderOptionClick(Reminder reminder, View view) {

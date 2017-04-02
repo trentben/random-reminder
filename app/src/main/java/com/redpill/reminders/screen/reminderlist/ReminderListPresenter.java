@@ -12,10 +12,6 @@ public class ReminderListPresenter {
         mModel = model;
     }
 
-    public void onAddReminder(Reminder reminder) {
-        mModel.addReminder(reminder);
-    }
-
     public void deleteReminder(Reminder reminder) {
         mModel.deleteReminder(reminder);
     }

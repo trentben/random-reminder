@@ -9,13 +9,7 @@ import android.support.v4.app.NotificationCompat;
 
 import com.redpill.reminders.R;
 import com.redpill.reminders.model.Reminder;
-import com.redpill.reminders.realm.ReminderRealm;
-import com.redpill.reminders.util.Utility;
-
-import java.util.Calendar;
-import java.util.Random;
-
-import io.realm.Realm;
+import com.redpill.reminders.realm.ReminderManager;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 
@@ -23,17 +17,18 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     public static final String REMINDER_ID = "ReminderId";
 
-    private ReminderRealm mRealm;
+    private ReminderManager mManager;
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        mManager = new ReminderManager(context);
 
         Reminder reminder = getReminderFromIntent(intent);
         showNotification(context, reminder);
         vibrate(context);
 
 
-        getReminderRealm().removeReminder(reminder.getId());
+        mManager.updateReminderTime(reminder);
 
     }
 
@@ -44,10 +39,10 @@ public class AlarmReceiver extends BroadcastReceiver {
                         .setContentTitle("My notification")
                         .setContentText(reminder.getTitle());
 
-        int mNotificationId = 001;
+        int notificationId = reminder.getId();
         NotificationManager mNotifyMgr =
                 (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-        mNotifyMgr.notify(mNotificationId, mBuilder.build());
+        mNotifyMgr.notify(notificationId, mBuilder.build());
     }
 
     private void vibrate(Context context) {
@@ -57,14 +52,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     private Reminder getReminderFromIntent(Intent intent) {
         int reminderId = intent.getIntExtra(REMINDER_ID, 0);
-        return getReminderRealm().getReminderById(reminderId);
-    }
-
-    private ReminderRealm getReminderRealm() {
-        if (mRealm == null) {
-            mRealm = new ReminderRealm();
-        }
-        return mRealm;
+        return mManager.getReminderById(reminderId);
     }
 
 }

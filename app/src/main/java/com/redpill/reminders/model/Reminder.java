@@ -13,6 +13,7 @@ public class Reminder extends RealmObject {
     private long createdAt;
     private String title;
     private long remindAt;
+    private long lastReminder;
 
     public Reminder() {
         id = UUID.randomUUID().hashCode();
@@ -41,5 +42,13 @@ public class Reminder extends RealmObject {
 
     public long getCreatedAt() {
         return createdAt;
+    }
+
+    public long getLastReminder() {
+        return lastReminder;
+    }
+
+    public void setLastReminder(long lastReminder) {
+        this.lastReminder = lastReminder;
     }
 }

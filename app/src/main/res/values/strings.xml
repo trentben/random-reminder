@@ -7,4 +7,8 @@
     <string name="cancel">cancel</string>
     <string name="add_reminder">Add Reminder</string>
     <string name="delete">Delete</string>
+    <string name="create_reminder">Create Reminder</string>
+    <string name="update_reminder">Update Reminder</string>
+    <string name="setup_reminder">Setup Reminder</string>
+    <string name="update">Update</string>
 </resources>
