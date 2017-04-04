@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="time_of_day_array">
+        <item>@string/any</item>
+        <item>@string/morning</item>
+        <item>@string/afternoon</item>
+        <item>@string/evening</item>
+    </string-array>
+</resources>

@@ -2,7 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="6dp">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="6dp">
 
     <TextView
         style="@style/Base.TextAppearance.AppCompat.Title"
@@ -11,19 +15,78 @@
         android:layout_height="wrap_content"
         android:text="@string/setup_reminder"/>
 
-    <EditText
-        android:id="@+id/title_edit"
+    <LinearLayout
+        android:id="@+id/content_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_below="@id/dialog_title"
-        android:hint="Title"/>
+        android:layout_marginBottom="12dp"
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/title_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Title"/>
+
+        <TextView
+            style="@style/Base.TextAppearance.AppCompat.Caption"
+            android:id="@+id/frequency_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="2dp"
+            android:text="@string/reminde_me_every"/>
+
+        <LinearLayout
+            android:id="@+id/freq_button_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp">
+            <Button
+                style="@style/FrequencyButton.High.Grey"
+                android:id="@+id/freq_high_button"
+                android:layout_width="wrap_content"
+                android:text="@string/day"
+                android:elevation="0dp"
+                />
+            <Button
+                style="@style/FrequencyButton.Medium"
+                android:id="@+id/freq_medium_button"
+                android:layout_width="wrap_content"
+                android:text="@string/week"
+                android:elevation="0dp"
+                />
+            <Button
+                style="@style/FrequencyButton.Low.Grey"
+                android:id="@+id/freq_low_button"
+                android:layout_width="wrap_content"
+                android:text="@string/month"
+                android:elevation="0dp"/>
+
+        </LinearLayout>
+
+        <TextView
+            style="@style/Base.TextAppearance.AppCompat.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="2dp"
+            android:text="@string/time" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/time_of_day_array"></Spinner>
+    </LinearLayout>
+
+
 
     <FrameLayout
         android:id="@+id/button_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/title_edit"
+        android:layout_below="@id/content_layout"
         android:layout_alignParentEnd="true">
         <Button
             style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
@@ -47,9 +110,8 @@
         android:id="@+id/cancel_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="4dp"
         android:layout_marginEnd="4dp"
-        android:layout_below="@id/title_edit"
+        android:layout_below="@id/content_layout"
         android:layout_toLeftOf="@id/button_container"
         android:layout_toStartOf="@id/button_container"
         android:text="@string/cancel"/>

@@ -1,5 +1,7 @@
 package com.redpill.reminders.screen.reminderlist.dialog;
 
+import com.redpill.reminders.model.Reminder;
+
 public class EditReminderPresenter {
 
     private EditReminderView mView;
@@ -15,16 +17,19 @@ public class EditReminderPresenter {
         if (mView.isUpdateMode()) {
             mModel.setReminderToUpdate(mView.getReminderIdParam());
             mView.setTitleText(mModel.getReminderTitle());
+            mView.setSelectedFrequency(mModel.getSelectedFrequency());
+        } else {
+            mView.setSelectedFrequency(Reminder.FREQUENCY_MEDIUM);
         }
     }
 
     public void onAddReminderClick() {
-        mModel.createNewReminder(mView.getTitleText());
+        mModel.createNewReminder(mView.getTitleText(), mView.getSelectedFrequency());
         mView.dismiss();
     }
 
     public void onUpdateReminderClick() {
-        mModel.updateReminder(mView.getTitleText());
+        mModel.updateReminder(mView.getTitleText(), mView.getSelectedFrequency());
         mView.dismiss();
     }
 }

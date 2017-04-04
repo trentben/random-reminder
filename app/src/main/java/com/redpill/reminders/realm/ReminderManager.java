@@ -6,6 +6,9 @@ import com.redpill.reminders.alarm.AlarmScheduler;
 import com.redpill.reminders.model.Reminder;
 import com.redpill.reminders.util.Utility;
 
+import java.util.Calendar;
+import java.util.Random;
+
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -55,7 +58,7 @@ public class ReminderManager {
     }
 
     private void _updateReminderTime(Reminder reminder) {
-        reminder.setRemindAt(Utility.getRandomTime());
+        reminder.setRemindAt(generateReminderTime(reminder));
         mScheduler.scheduleAlarm(reminder);
     }
 
@@ -66,5 +69,32 @@ public class ReminderManager {
         _updateReminderTime(reminder);
         mRealm.commitTransaction();
         return reminder;
+    }
+
+    private long generateReminderTime(Reminder reminder) {
+        int frequency = reminder.getFrequency();
+
+        Calendar time = Calendar.getInstance();
+
+        Random random = new Random();
+        int randHours = 7+random.nextInt(15); //Between 7am and 9pm
+        int randMin = random.nextInt(60);
+
+        time.set(Calendar.HOUR, randHours);
+        time.set(Calendar.MINUTE, randMin);
+
+        if (Reminder.FREQUENCY_HIGH == frequency) {
+            time.add(Calendar.DATE, 1);
+        } else if (Reminder.FREQUENCY_MEDIUM == frequency) {
+            int randDays = 6 + random.nextInt(3); //Between 6 and 8 days
+            time.add(Calendar.DATE, randDays);
+        } else if (Reminder.FREQUENCY_LOW == frequency) {
+            int randDays = 25 + random.nextInt(11); //Between 25 and 35 days
+            time.add(Calendar.DATE, randDays);
+        } else {
+            time.add(Calendar.DATE, 1);
+        }
+
+        return time.getTimeInMillis();
     }
 }

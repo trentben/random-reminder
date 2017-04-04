@@ -8,10 +8,15 @@ import io.realm.annotations.Index;
 
 public class Reminder extends RealmObject {
 
+    public static final int FREQUENCY_LOW = 1;
+    public static final int FREQUENCY_MEDIUM = 2;
+    public static final int FREQUENCY_HIGH = 3;
+
     @Index
     private int id;
     private long createdAt;
     private String title;
+    private int frequency;
     private long remindAt;
     private long lastReminder;
 
@@ -50,5 +55,13 @@ public class Reminder extends RealmObject {
 
     public void setLastReminder(long lastReminder) {
         this.lastReminder = lastReminder;
+    }
+
+    public int getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(int frequency) {
+        this.frequency = frequency;
     }
 }

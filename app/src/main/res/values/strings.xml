@@ -11,4 +11,19 @@
     <string name="update_reminder">Update Reminder</string>
     <string name="setup_reminder">Setup Reminder</string>
     <string name="update">Update</string>
+    <string name="low">Low</string>
+    <string name="medium">Medium</string>
+    <string name="high">High</string>
+    <string name="reminder_frequency">Frequency</string>
+    <string name="reminde_me_every">Remind me every %s...ish</string>
+    <string name="time">Time</string>
+    <string name="day">day</string>
+    <string name="week">week</string>
+    <string name="month">month</string>
+    <string name="all_day">All Day</string>
+    <string name="morning">Morning</string>
+    <string name="afternoon">Afternoon</string>
+    <string name="evening">Evening</string>
+    <string name="any">Any</string>
+
 </resources>

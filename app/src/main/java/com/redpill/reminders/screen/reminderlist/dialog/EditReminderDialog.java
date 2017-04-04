@@ -1,18 +1,28 @@
 package com.redpill.reminders.screen.reminderlist.dialog;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.redpill.reminders.R;
+import com.redpill.reminders.model.Reminder;
 import com.redpill.reminders.util.Constant;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -21,12 +31,23 @@ public class EditReminderDialog extends DialogFragment implements EditReminderVi
 
     @BindView(R.id.dialog_title) TextView mDialogTitleText;
     @BindView(R.id.title_edit) EditText mTitleEdit;
+    @BindView(R.id.frequency_text) TextView mFrequencyText;
+    @BindView(R.id.freq_low_button) Button mLowButton;
+    @BindView(R.id.freq_medium_button) Button mMediumButton;
+    @BindView(R.id.freq_high_button) Button mHighButton;
     @BindView(R.id.add_button) Button mAddButton;
     @BindView(R.id.update_button) Button mUpdateButton;
+    @BindDrawable(R.drawable.button_frequency_high) Drawable mHighBackground;
+    @BindDrawable(R.drawable.button_frequency_medium) Drawable mMediumBackground;
+    @BindDrawable(R.drawable.button_frequency_low) Drawable mLowBackground;
+    @BindDrawable(R.drawable.button_frequency_high_grey) Drawable mHighBackgroundGrey;
+    @BindDrawable(R.drawable.button_frequency_medium_grey) Drawable mMediumBackgroundGrey;
+    @BindDrawable(R.drawable.button_frequency_low_grey) Drawable mLowBackgroundGrey;
 
     private EditReminderPresenter mPresenter;
     private boolean mIsUpdateMode;
     private int mReminderId;
+    private int mSelectedFrequency;
 
     @Nullable
     @Override
@@ -39,6 +60,33 @@ public class EditReminderDialog extends DialogFragment implements EditReminderVi
 
         mPresenter = new EditReminderPresenter(this, new EditReminderModel(getContext()));
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        WindowManager.LayoutParams params = getDialog().getWindow().getAttributes();
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        getDialog().getWindow().setAttributes(params);
+
+        super.onResume();
+    }
+
+    @OnClick(R.id.freq_low_button)
+    public void onLowFreqClick() {
+        setSelectedFrequency(FREQUENCY_LOW);
+    }
+
+    @OnClick(R.id.freq_medium_button)
+    public void onMediumFreqClick() {
+        setSelectedFrequency(FREQUENCY_MEDIUM);
+
+    }
+
+    @OnClick(R.id.freq_high_button)
+    public void onHighFreqClick() {
+        setSelectedFrequency(FREQUENCY_HIGH);
+
     }
 
     @OnClick(R.id.add_button)
@@ -78,6 +126,39 @@ public class EditReminderDialog extends DialogFragment implements EditReminderVi
         mTitleEdit.setText(text);
     }
 
+    @Override
+    public int getSelectedFrequency() {
+        return mSelectedFrequency;
+    }
+
+    @Override
+    public void setSelectedFrequency(int freq) {
+        mSelectedFrequency = freq;
+
+        mHighButton.setBackground(mHighBackgroundGrey);
+        mMediumButton.setBackground(mMediumBackgroundGrey);
+        mLowButton.setBackground(mLowBackgroundGrey);
+
+        String freqDuration = "";
+
+        switch (freq) {
+            case FREQUENCY_HIGH:
+                mHighButton.setBackground(mHighBackground);
+                freqDuration = getString(R.string.day);
+                break;
+            case FREQUENCY_MEDIUM:
+                mMediumButton.setBackground(mMediumBackground);
+                freqDuration = getString(R.string.week);
+                break;
+            case FREQUENCY_LOW:
+                mLowButton.setBackground(mLowBackground);
+                freqDuration = getString(R.string.month);
+                break;
+        }
+
+        mFrequencyText.setText(String.format(getString(R.string.reminde_me_every), freqDuration));
+    }
+
     //Dialog Methods
 
     private void handleArguments() {
@@ -101,7 +182,8 @@ public class EditReminderDialog extends DialogFragment implements EditReminderVi
         mAddButton.setVisibility(mIsUpdateMode ? View.GONE : View.VISIBLE);
         mUpdateButton.setVisibility(mIsUpdateMode ? View.VISIBLE : View.GONE);
 
-
     }
+
+
 
 }

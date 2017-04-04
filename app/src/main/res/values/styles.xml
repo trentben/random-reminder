@@ -8,4 +8,35 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="FrequencyButton">
+        <item name="android:textColor">@color/primaryTextWhite</item>
+        <item name="android:layout_height">@dimen/button_frequency_height</item>
+        <item name="android:layout_marginTop">@dimen/button_frequency_margin_vertical</item>
+        <item name="android:layout_marginBottom">@dimen/button_frequency_margin_vertical</item>
+        <item name="android:layout_marginStart">@dimen/button_frequency_margin_horz</item>
+    </style>
+
+    <style name="FrequencyButton.High">
+        <item name="android:background">@drawable/button_frequency_high</item>
+    </style>
+
+    <style name="FrequencyButton.Medium">
+        <item name="android:background">@drawable/button_frequency_medium</item>
+    </style>
+
+    <style name="FrequencyButton.Low">
+        <item name="android:background">@drawable/button_frequency_low</item>
+    </style>
+
+    <style name="FrequencyButton.High.Grey">
+        <item name="android:background">@drawable/button_frequency_high_grey</item>
+    </style>
+
+    <style name="FrequencyButton.Medium.Grey">
+        <item name="android:background">@drawable/button_frequency_medium_grey</item>
+    </style>
+
+    <style name="FrequencyButton.Low.Grey">
+        <item name="android:background">@drawable/button_frequency_low_grey</item>
+    </style>
 </resources>
