@@ -1,5 +1,6 @@
 package com.redpill.reminders.screen.reminderlist.dialog;
 
+import android.app.Dialog;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,6 +8,7 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -35,6 +37,7 @@ public class EditReminderDialog extends DialogFragment implements EditReminderVi
     @BindView(R.id.freq_low_button) Button mLowButton;
     @BindView(R.id.freq_medium_button) Button mMediumButton;
     @BindView(R.id.freq_high_button) Button mHighButton;
+    @BindView(R.id.time_of_day_spinner) Spinner mTimeOfDaySpinner;
     @BindView(R.id.add_button) Button mAddButton;
     @BindView(R.id.update_button) Button mUpdateButton;
     @BindDrawable(R.drawable.button_frequency_high) Drawable mHighBackground;
@@ -48,6 +51,16 @@ public class EditReminderDialog extends DialogFragment implements EditReminderVi
     private boolean mIsUpdateMode;
     private int mReminderId;
     private int mSelectedFrequency;
+    private int mSelectedTimeOfDay;
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+
+        // request a window without the title
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        return dialog;
+    }
 
     @Nullable
     @Override
@@ -157,6 +170,16 @@ public class EditReminderDialog extends DialogFragment implements EditReminderVi
         }
 
         mFrequencyText.setText(String.format(getString(R.string.reminde_me_every), freqDuration));
+    }
+
+    @Override
+    public int getTimeOfDay() {
+        return mTimeOfDaySpinner.getSelectedItemPosition();
+    }
+
+    @Override
+    public void setTimeOfDay(int timeOfDay) {
+        mTimeOfDaySpinner.setSelection(timeOfDay);
     }
 
     //Dialog Methods

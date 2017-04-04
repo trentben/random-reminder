@@ -18,18 +18,19 @@ public class EditReminderPresenter {
             mModel.setReminderToUpdate(mView.getReminderIdParam());
             mView.setTitleText(mModel.getReminderTitle());
             mView.setSelectedFrequency(mModel.getSelectedFrequency());
+            mView.setTimeOfDay(mModel.getTimeOfDay());
         } else {
             mView.setSelectedFrequency(Reminder.FREQUENCY_MEDIUM);
         }
     }
 
     public void onAddReminderClick() {
-        mModel.createNewReminder(mView.getTitleText(), mView.getSelectedFrequency());
+        mModel.createNewReminder(mView.getTitleText(), mView.getSelectedFrequency(), mView.getTimeOfDay());
         mView.dismiss();
     }
 
     public void onUpdateReminderClick() {
-        mModel.updateReminder(mView.getTitleText(), mView.getSelectedFrequency());
+        mModel.updateReminder(mView.getTitleText(), mView.getSelectedFrequency(), mView.getTimeOfDay());
         mView.dismiss();
     }
 }

@@ -11,6 +11,8 @@ import com.redpill.reminders.R;
 import com.redpill.reminders.model.Reminder;
 import com.redpill.reminders.realm.ReminderManager;
 
+import io.realm.Realm;
+
 import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class AlarmReceiver extends BroadcastReceiver {
@@ -28,8 +30,8 @@ public class AlarmReceiver extends BroadcastReceiver {
         vibrate(context);
 
 
+        mManager.recordAlarmHistory(reminder, reminder.getRemindAt());
         mManager.updateReminderTime(reminder);
-
     }
 
     private void showNotification(Context context, Reminder reminder) {

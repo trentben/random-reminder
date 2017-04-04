@@ -12,5 +12,8 @@ public interface EditReminderView {
     void setTitleText(String text);
     int getSelectedFrequency();
     void setSelectedFrequency(int frequency);
+    int getTimeOfDay();
+    void setTimeOfDay(int timeOfDay);
     void dismiss();
+
 }

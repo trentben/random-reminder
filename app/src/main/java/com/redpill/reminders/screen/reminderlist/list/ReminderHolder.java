@@ -46,7 +46,35 @@ public class ReminderHolder extends RecyclerView.ViewHolder {
         mReminder = reminder;
         setColorStrip();
         mTitleText.setText(reminder.getTitle());
-        mLastReminderText.setText(DATE_FORMAT.format(new Date(reminder.getRemindAt())));
+
+
+        mLastReminderText.setText(getLastReminderText());
+    }
+
+    private String getLastReminderText() {
+        if (mReminder.getReminderHistory().size() == 0) {
+            return "Next reminder sometime in the next " + toFrequencyName(mReminder.getFrequency());
+        } else {
+            long lastAlarm = mReminder.getReminderHistory().get(mReminder.getReminderHistory().size() - 1).getAlarmDate();
+            Calendar date = Calendar.getInstance();
+            date.setTimeInMillis(lastAlarm);
+
+        }
+
+        return "";
+    }
+
+    private String toFrequencyName(int frequency) {
+        switch(frequency) {
+            case Reminder.FREQUENCY_HIGH:
+                return "day";
+            case Reminder.FREQUENCY_MEDIUM:
+                return "week";
+            case Reminder.FREQUENCY_LOW:
+                return "month";
+            default:
+                return "n/a";
+        }
     }
 
     private void setColorStrip() {

@@ -3,6 +3,7 @@ package com.redpill.reminders.realm;
 import android.content.Context;
 
 import com.redpill.reminders.alarm.AlarmScheduler;
+import com.redpill.reminders.model.AlarmHistory;
 import com.redpill.reminders.model.Reminder;
 import com.redpill.reminders.util.Utility;
 
@@ -71,14 +72,39 @@ public class ReminderManager {
         return reminder;
     }
 
+    public void recordAlarmHistory(Reminder reminder, long alarmTime) {
+        getRealm().executeTransaction(realm -> {
+            AlarmHistory alarmHistory = realm.createObject(AlarmHistory.class, alarmTime);
+            reminder.getReminderHistory().add(alarmHistory);
+        });
+    }
+
     private long generateReminderTime(Reminder reminder) {
         int frequency = reminder.getFrequency();
 
         Calendar time = Calendar.getInstance();
 
         Random random = new Random();
-        int randHours = 7+random.nextInt(15); //Between 7am and 9pm
-        int randMin = random.nextInt(60);
+
+        int randHours, randMin;
+        switch (reminder.getAlarmTimeOfDay()) {
+            case Reminder.TIME_MORNING:
+                randHours = 6+random.nextInt(6); //Between 7am and 11pm
+                randMin = random.nextInt(60);
+                break;
+            case Reminder.TIME_AFTERNOON:
+                randHours = 12+random.nextInt(6); //Between 12pm and 5pm
+                randMin = random.nextInt(60);
+                break;
+            case Reminder.TIME_NIGHT:
+                randHours = 17+random.nextInt(5); //Between 5pm and 9pm
+                randMin = random.nextInt(60);
+                break;
+            default:
+                randHours = 7+random.nextInt(15); //Between 7am and 9pm
+                randMin = random.nextInt(60);
+                break;
+        }
 
         time.set(Calendar.HOUR, randHours);
         time.set(Calendar.MINUTE, randMin);
@@ -86,10 +112,10 @@ public class ReminderManager {
         if (Reminder.FREQUENCY_HIGH == frequency) {
             time.add(Calendar.DATE, 1);
         } else if (Reminder.FREQUENCY_MEDIUM == frequency) {
-            int randDays = 6 + random.nextInt(3); //Between 6 and 8 days
+            int randDays = 5 + random.nextInt(5); //Between 6 and 9 days
             time.add(Calendar.DATE, randDays);
         } else if (Reminder.FREQUENCY_LOW == frequency) {
-            int randDays = 25 + random.nextInt(11); //Between 25 and 35 days
+            int randDays = 22 + random.nextInt(16); //Between 22 and 37 days
             time.add(Calendar.DATE, randDays);
         } else {
             time.add(Calendar.DATE, 1);

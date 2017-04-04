@@ -3,6 +3,7 @@ package com.redpill.reminders.model;
 import java.util.Date;
 import java.util.UUID;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Index;
 
@@ -12,13 +13,20 @@ public class Reminder extends RealmObject {
     public static final int FREQUENCY_MEDIUM = 2;
     public static final int FREQUENCY_HIGH = 3;
 
+    public static final int TIME_ANY = 0;
+    public static final int TIME_MORNING = 1;
+    public static final int TIME_AFTERNOON = 2;
+    public static final int TIME_NIGHT = 3;
+
     @Index
     private int id;
     private long createdAt;
     private String title;
     private int frequency;
+    private int alarmTimeOfDay;
     private long remindAt;
-    private long lastReminder;
+    private RealmList<AlarmHistory> reminderHistory;
+    private boolean isDisabled;
 
     public Reminder() {
         id = UUID.randomUUID().hashCode();
@@ -49,19 +57,35 @@ public class Reminder extends RealmObject {
         return createdAt;
     }
 
-    public long getLastReminder() {
-        return lastReminder;
-    }
-
-    public void setLastReminder(long lastReminder) {
-        this.lastReminder = lastReminder;
-    }
-
     public int getFrequency() {
         return frequency;
     }
 
     public void setFrequency(int frequency) {
         this.frequency = frequency;
+    }
+
+    public int getAlarmTimeOfDay() {
+        return alarmTimeOfDay;
+    }
+
+    public void setAlarmTimeOfDay(int alarmTimeOfDay) {
+        this.alarmTimeOfDay = alarmTimeOfDay;
+    }
+
+    public RealmList<AlarmHistory> getReminderHistory() {
+        return reminderHistory;
+    }
+
+    public void setReminderHistory(RealmList<AlarmHistory> reminderHistory) {
+        this.reminderHistory = reminderHistory;
+    }
+
+    public boolean isDisabled() {
+        return isDisabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        isDisabled = disabled;
     }
 }
