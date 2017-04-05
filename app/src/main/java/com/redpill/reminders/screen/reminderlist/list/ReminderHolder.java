@@ -47,7 +47,9 @@ public class ReminderHolder extends RecyclerView.ViewHolder {
         setColorStrip();
         mTitleText.setText(reminder.getTitle());
 
-
+        Date date = new Date();
+        date.setTime(mReminder.getRemindAt());
+//        mLastReminderText.setText(DATE_FORMAT.format(date));
         mLastReminderText.setText(getLastReminderText());
     }
 

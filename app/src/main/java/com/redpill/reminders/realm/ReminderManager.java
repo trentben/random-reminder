@@ -5,7 +5,6 @@ import android.content.Context;
 import com.redpill.reminders.alarm.AlarmScheduler;
 import com.redpill.reminders.model.AlarmHistory;
 import com.redpill.reminders.model.Reminder;
-import com.redpill.reminders.util.Utility;
 
 import java.util.Calendar;
 import java.util.Random;
@@ -96,7 +95,7 @@ public class ReminderManager {
                 randHours = 12+random.nextInt(6); //Between 12pm and 5pm
                 randMin = random.nextInt(60);
                 break;
-            case Reminder.TIME_NIGHT:
+            case Reminder.TIME_EVENING:
                 randHours = 17+random.nextInt(5); //Between 5pm and 9pm
                 randMin = random.nextInt(60);
                 break;
@@ -106,7 +105,7 @@ public class ReminderManager {
                 break;
         }
 
-        time.set(Calendar.HOUR, randHours);
+        time.set(Calendar.HOUR_OF_DAY, randHours);
         time.set(Calendar.MINUTE, randMin);
 
         if (Reminder.FREQUENCY_HIGH == frequency) {

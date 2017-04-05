@@ -16,7 +16,7 @@ public class Reminder extends RealmObject {
     public static final int TIME_ANY = 0;
     public static final int TIME_MORNING = 1;
     public static final int TIME_AFTERNOON = 2;
-    public static final int TIME_NIGHT = 3;
+    public static final int TIME_EVENING = 3;
 
     @Index
     private int id;
