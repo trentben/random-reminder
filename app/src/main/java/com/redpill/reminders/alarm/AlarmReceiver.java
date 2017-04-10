@@ -1,6 +1,7 @@
 package com.redpill.reminders.alarm;
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,8 @@ import android.support.v4.app.NotificationCompat;
 import com.redpill.reminders.R;
 import com.redpill.reminders.model.Reminder;
 import com.redpill.reminders.realm.ReminderManager;
+import com.redpill.reminders.screen.home.HomeActivity;
+import com.redpill.reminders.util.Constant;
 
 import io.realm.Realm;
 
@@ -38,13 +41,19 @@ public class AlarmReceiver extends BroadcastReceiver {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("My notification")
-                        .setContentText(reminder.getTitle());
+                        .setContentTitle(reminder.getTitle())
+                        .setContentIntent(getReminderIntent(context, reminder.getId()));
 
         int notificationId = reminder.getId();
         NotificationManager mNotifyMgr =
                 (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         mNotifyMgr.notify(notificationId, mBuilder.build());
+    }
+
+    private PendingIntent getReminderIntent(Context context, int reminderId) {
+        Intent intent = new Intent(context, HomeActivity.class);
+        intent.putExtra(Constant.FLAG_REMINDER_ID, reminderId);
+        return PendingIntent.getActivity(context, reminderId, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT);
     }
 
     private void vibrate(Context context) {
@@ -56,5 +65,5 @@ public class AlarmReceiver extends BroadcastReceiver {
         int reminderId = intent.getIntExtra(REMINDER_ID, 0);
         return mManager.getReminderById(reminderId);
     }
-
+    
 }
