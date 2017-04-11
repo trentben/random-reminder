@@ -1,5 +1,6 @@
 package com.redpill.reminders.alarm;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -30,8 +31,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         Reminder reminder = getReminderFromIntent(intent);
         showNotification(context, reminder);
-        vibrate(context);
-
 
         mManager.recordAlarmHistory(reminder, reminder.getRemindAt());
         mManager.updateReminderTime(reminder);
@@ -42,7 +41,10 @@ public class AlarmReceiver extends BroadcastReceiver {
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setContentTitle(reminder.getTitle())
-                        .setContentIntent(getReminderIntent(context, reminder.getId()));
+                        .setContentIntent(getReminderIntent(context, reminder.getId()))
+                        .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
+//                        .setAutoCancel(true)
+                        .addAction(0, "DISABLE", null);
 
         int notificationId = reminder.getId();
         NotificationManager mNotifyMgr =
@@ -56,14 +58,9 @@ public class AlarmReceiver extends BroadcastReceiver {
         return PendingIntent.getActivity(context, reminderId, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT);
     }
 
-    private void vibrate(Context context) {
-        Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-        v.vibrate(750);
-    }
-
     private Reminder getReminderFromIntent(Intent intent) {
         int reminderId = intent.getIntExtra(REMINDER_ID, 0);
         return mManager.getReminderById(reminderId);
     }
-    
+
 }
