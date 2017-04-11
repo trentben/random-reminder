@@ -20,6 +20,12 @@ import butterknife.OnClick;
 
 public class ReminderHolder extends RecyclerView.ViewHolder {
 
+    private static final long ONE_HOUR = 3600000;
+    private static final long ONE_DAY = ONE_HOUR * 24;
+    private static final long ONE_WEEK = ONE_DAY * 7;
+    private static final long ONE_MONTH = ONE_DAY * 30;
+
+
     @BindView(R.id.color_strip) View mColorStrip;
     @BindView(R.id.title) TextView mTitleText;
     @BindView(R.id.last_reminder_text) TextView mLastReminderText;
@@ -58,12 +64,29 @@ public class ReminderHolder extends RecyclerView.ViewHolder {
             return "Next reminder sometime in the next " + toFrequencyName(mReminder.getFrequency());
         } else {
             long lastAlarm = mReminder.getReminderHistory().get(mReminder.getReminderHistory().size() - 1).getAlarmDate();
-            Calendar date = Calendar.getInstance();
-            date.setTimeInMillis(lastAlarm);
+            long now = new Date().getTime();
+
+            long difference = now - lastAlarm;
+
+            String lastReminder = "Last reminder was %s";
+
+            if (difference < ONE_HOUR) {
+                return String.format(lastReminder, "moments ago");
+            } else if(difference < ONE_DAY) {
+                return String.format(lastReminder, "hours ago");
+            } else if (difference < ONE_WEEK - ONE_DAY) {
+                return String.format(lastReminder, "days ago");
+            } else if (difference < (ONE_WEEK * 1.5)) {
+                return String.format(lastReminder, "about a week ago");
+            } else if (difference < ONE_MONTH - (ONE_DAY * 5)) {
+                return String.format(lastReminder, "weeks ago");
+            } else if (difference < ONE_MONTH + ONE_WEEK) {
+                return String.format(lastReminder, "about a month ago");
+            } else {
+                return String.format(lastReminder, "forever ago!");
+            }
 
         }
-
-        return "";
     }
 
     private String toFrequencyName(int frequency) {
