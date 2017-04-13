@@ -25,5 +25,6 @@
     <string name="afternoon">Afternoon</string>
     <string name="evening">Evening</string>
     <string name="any">Any</string>
+    <string name="save">Save</string>
 
 </resources>

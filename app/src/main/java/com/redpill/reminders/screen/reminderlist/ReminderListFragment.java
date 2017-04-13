@@ -1,9 +1,10 @@
 package com.redpill.reminders.screen.reminderlist;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.redpill.reminders.R;
+import com.redpill.reminders.callback.ObjectCallback;
 import com.redpill.reminders.model.Reminder;
 import com.redpill.reminders.screen.reminderlist.dialog.EditReminderDialog;
 import com.redpill.reminders.screen.reminderlist.list.ReminderListAdapter;
@@ -66,13 +68,7 @@ public class ReminderListFragment extends Fragment implements ReminderListView{
     }
 
     private void onReminderItemClick(Reminder reminder) {
-        Bundle args = new Bundle();
-        args.putBoolean(Constant.FLAG_IS_UPDATE_MODE, true);
-        args.putInt(Constant.FLAG_REMINDER_ID, reminder.getId());
-
-        EditReminderDialog dialog = new EditReminderDialog();
-        dialog.setArguments(args);
-        dialog.show(getFragmentManager(), "updateReminder");
+        mPresenter.onReminderClick(reminder);
     }
 
     private void onReminderOptionClick(Reminder reminder, View view) {
@@ -80,7 +76,7 @@ public class ReminderListFragment extends Fragment implements ReminderListView{
         popupMenu.inflate(R.menu.list_item_menu);
         popupMenu.setOnMenuItemClickListener(item -> {
             if (R.id.delete == item.getItemId()) {
-                mPresenter.deleteReminder(reminder);
+                mPresenter.onDeleteReminder(reminder);
                 return true;
             }
             return false;
@@ -95,6 +91,27 @@ public class ReminderListFragment extends Fragment implements ReminderListView{
         mAdapter.setReminderList(reminders);
     }
 
+    @Override
+    public void showEditReminderDialog(Reminder reminder) {
+        Bundle args = new Bundle();
+        args.putBoolean(Constant.FLAG_IS_UPDATE_MODE, true);
+        args.putInt(Constant.FLAG_REMINDER_ID, reminder.getId());
+
+        EditReminderDialog dialog = new EditReminderDialog();
+        dialog.setArguments(args);
+        dialog.setOnDeleteListener(mPresenter::onDeleteReminder);
+        dialog.show(getFragmentManager(), "updateReminder");
+    }
+
+    @Override
+    public void showDeleteConfirmationDialog(ObjectCallback<Boolean> callback) {
+        new AlertDialog.Builder(getContext())
+                .setTitle("Delete")
+                .setMessage("Are you sure you want to delete?")
+                .setPositiveButton("YES", (dialog, which) -> callback.onCallback(true))
+                .setNegativeButton("NO", (dialog, which) -> callback.onCallback(false))
+                .show();
+    }
 
 
     //Fragment Methods

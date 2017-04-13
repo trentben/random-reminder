@@ -54,4 +54,8 @@ public class EditReminderModel {
     public int getTimeOfDay() {
         return mReminder.getAlarmTimeOfDay();
     }
+
+    public Reminder getReminder() {
+        return mReminder;
+    }
 }

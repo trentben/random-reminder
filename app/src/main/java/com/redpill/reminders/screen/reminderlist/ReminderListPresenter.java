@@ -12,12 +12,20 @@ public class ReminderListPresenter {
         mModel = model;
     }
 
-    public void deleteReminder(Reminder reminder) {
-        mModel.deleteReminder(reminder);
+    public void onDeleteReminder(Reminder reminder) {
+        mView.showDeleteConfirmationDialog(doDelete -> {
+            if (doDelete) {
+                mModel.deleteReminder(reminder);
+            }
+        });
     }
 
     public void onStart() {
         mView.setReminders(mModel.getReminders());
 
+    }
+
+    public void onReminderClick(Reminder reminder) {
+        mView.showEditReminderDialog(reminder);
     }
 }

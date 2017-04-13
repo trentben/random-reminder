@@ -33,4 +33,8 @@ public class EditReminderPresenter {
         mModel.updateReminder(mView.getTitleText(), mView.getSelectedFrequency(), mView.getTimeOfDay());
         mView.dismiss();
     }
+
+    public void onDeleteReminder() {
+        mView.navigateToDelete(mModel.getReminder());
+    }
 }

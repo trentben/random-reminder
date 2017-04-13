@@ -1,5 +1,7 @@
 package com.redpill.reminders.screen.reminderlist.dialog;
 
+import com.redpill.reminders.model.Reminder;
+
 public interface EditReminderView {
 
     int FREQUENCY_LOW = 1;
@@ -14,6 +16,7 @@ public interface EditReminderView {
     void setSelectedFrequency(int frequency);
     int getTimeOfDay();
     void setTimeOfDay(int timeOfDay);
+    void navigateToDelete(Reminder reminder);
     void dismiss();
 
 }

@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.widget.AppCompatEditText;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.redpill.reminders.R;
+import com.redpill.reminders.callback.ObjectCallback;
 import com.redpill.reminders.model.Reminder;
 import com.redpill.reminders.util.Constant;
 
@@ -32,7 +34,7 @@ import butterknife.OnClick;
 public class EditReminderDialog extends DialogFragment implements EditReminderView {
 
     @BindView(R.id.dialog_title) TextView mDialogTitleText;
-    @BindView(R.id.title_edit) EditText mTitleEdit;
+    @BindView(R.id.title_edit) AppCompatEditText mTitleEdit;
     @BindView(R.id.frequency_text) TextView mFrequencyText;
     @BindView(R.id.freq_low_button) Button mLowButton;
     @BindView(R.id.freq_medium_button) Button mMediumButton;
@@ -40,6 +42,8 @@ public class EditReminderDialog extends DialogFragment implements EditReminderVi
     @BindView(R.id.time_of_day_spinner) Spinner mTimeOfDaySpinner;
     @BindView(R.id.add_button) Button mAddButton;
     @BindView(R.id.update_button) Button mUpdateButton;
+    @BindView(R.id.cancel_button) Button mCancelButton;
+    @BindView(R.id.delete_button) Button mDeleteButton;
     @BindDrawable(R.drawable.button_frequency_high) Drawable mHighBackground;
     @BindDrawable(R.drawable.button_frequency_medium) Drawable mMediumBackground;
     @BindDrawable(R.drawable.button_frequency_low) Drawable mLowBackground;
@@ -52,6 +56,7 @@ public class EditReminderDialog extends DialogFragment implements EditReminderVi
     private int mReminderId;
     private int mSelectedFrequency;
     private int mSelectedTimeOfDay;
+    private ObjectCallback<Reminder> mOnDeleteListener;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -115,6 +120,12 @@ public class EditReminderDialog extends DialogFragment implements EditReminderVi
     @OnClick(R.id.cancel_button)
     public void onCancelClick() {
         dismiss();
+
+    }
+
+    @OnClick(R.id.delete_button)
+    public void onDeleteClick() {
+        mPresenter.onDeleteReminder();
     }
 
     //View Methods
@@ -182,6 +193,15 @@ public class EditReminderDialog extends DialogFragment implements EditReminderVi
         mTimeOfDaySpinner.setSelection(timeOfDay);
     }
 
+    @Override
+    public void navigateToDelete(Reminder reminder) {
+        dismiss();
+        if (mOnDeleteListener != null) {
+            mOnDeleteListener.onCallback(reminder);
+        }
+    }
+
+
     //Dialog Methods
 
     private void handleArguments() {
@@ -204,9 +224,14 @@ public class EditReminderDialog extends DialogFragment implements EditReminderVi
 
         mAddButton.setVisibility(mIsUpdateMode ? View.GONE : View.VISIBLE);
         mUpdateButton.setVisibility(mIsUpdateMode ? View.VISIBLE : View.GONE);
+        mCancelButton.setVisibility(mIsUpdateMode ? View.GONE : View.VISIBLE);
+        mDeleteButton.setVisibility(mIsUpdateMode ? View.VISIBLE : View.GONE);
 
     }
 
+    public void setOnDeleteListener(ObjectCallback<Reminder> callback) {
+        mOnDeleteListener = callback;
+    }
 
 
 }
