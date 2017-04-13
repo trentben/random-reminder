@@ -34,7 +34,7 @@ import butterknife.OnClick;
 public class EditReminderDialog extends DialogFragment implements EditReminderView {
 
     @BindView(R.id.dialog_title) TextView mDialogTitleText;
-    @BindView(R.id.title_edit) AppCompatEditText mTitleEdit;
+    @BindView(R.id.title_edit) EditText mTitleEdit;
     @BindView(R.id.frequency_text) TextView mFrequencyText;
     @BindView(R.id.freq_low_button) Button mLowButton;
     @BindView(R.id.freq_medium_button) Button mMediumButton;

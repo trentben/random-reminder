@@ -21,16 +21,18 @@ public class Reminder extends RealmObject {
     @Index
     private int id;
     private long createdAt;
+    private boolean isEnabled;
     private String title;
     private int frequency;
     private int alarmTimeOfDay;
     private long remindAt;
     private RealmList<AlarmHistory> reminderHistory;
-    private boolean isDisabled;
+
 
     public Reminder() {
         id = UUID.randomUUID().hashCode();
         createdAt = new Date().getTime();
+        isEnabled = true;
     }
 
     public String getTitle() {
@@ -81,11 +83,11 @@ public class Reminder extends RealmObject {
         this.reminderHistory = reminderHistory;
     }
 
-    public boolean isDisabled() {
-        return isDisabled;
+    public boolean isEnabled() {
+        return isEnabled;
     }
 
-    public void setDisabled(boolean disabled) {
-        isDisabled = disabled;
+    public void setEnabled(boolean disabled) {
+        isEnabled = disabled;
     }
 }

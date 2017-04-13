@@ -2,7 +2,11 @@ package com.redpill.reminders.screen.reminderlist.list;
 
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.redpill.reminders.R;
@@ -30,6 +34,7 @@ public class ReminderHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.title) TextView mTitleText;
     @BindView(R.id.last_reminder_text) TextView mLastReminderText;
     @BindView(R.id.options_btn) View mOptionButton;
+    @BindView(R.id.enable_switch) SwitchCompat mEnableSwitch;
     @BindColor(R.color.freq_low) int mLowColor;
     @BindColor(R.color.freq_medium) int mMediumColor;
     @BindColor(R.color.freq_high) int mHighColor;
@@ -46,12 +51,14 @@ public class ReminderHolder extends RecyclerView.ViewHolder {
         super(itemView);
         ButterKnife.bind(this, itemView);
         mItemView = itemView;
+        mEnableSwitch.setOnCheckedChangeListener(this::onEnableSwitchChange);
     }
 
     public void bind(Reminder reminder) {
         mReminder = reminder;
         setColorStrip();
         mTitleText.setText(reminder.getTitle());
+        mEnableSwitch.setChecked(reminder.isEnabled());
 
         Date date = new Date();
         date.setTime(mReminder.getRemindAt());
@@ -138,4 +145,11 @@ public class ReminderHolder extends RecyclerView.ViewHolder {
             mOnOptionClickListener.onOptionClick(mReminder, mOptionButton);
         }
     }
+
+    private void onEnableSwitchChange(CompoundButton compoundButton, boolean isEnabled) {
+        if (isEnabled != mReminder.isEnabled()) {
+
+        }
+    }
+
 }

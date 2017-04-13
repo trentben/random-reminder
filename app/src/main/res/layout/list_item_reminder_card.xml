@@ -23,6 +23,12 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp">
 
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/enable_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"/>
 
         <ImageView
             android:id="@+id/options_btn"
@@ -32,7 +38,8 @@
             android:paddingBottom="10dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:src="@drawable/ic_dots_vertical" />
+            android:src="@drawable/ic_dots_vertical"
+            android:visibility="gone"/>
 
         <TextView
             style="@style/Base.TextAppearance.AppCompat.Body2"

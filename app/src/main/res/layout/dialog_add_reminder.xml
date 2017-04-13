@@ -22,7 +22,7 @@
         android:layout_below="@id/dialog_title"
         android:layout_marginBottom="12dp"
         android:orientation="vertical">
-        <android.support.v7.widget.AppCompatEditText
+        <EditText
             android:id="@+id/title_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
