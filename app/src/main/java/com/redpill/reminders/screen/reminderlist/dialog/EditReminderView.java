@@ -16,6 +16,8 @@ public interface EditReminderView {
     void setSelectedFrequency(int frequency);
     int getTimeOfDay();
     void setTimeOfDay(int timeOfDay);
+    boolean isRepeat();
+    void setRepeat(boolean isRepeat);
     void navigateToDelete(Reminder reminder);
     void dismiss();
 

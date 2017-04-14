@@ -15,7 +15,8 @@
     <string name="medium">Medium</string>
     <string name="high">High</string>
     <string name="reminder_frequency">Frequency</string>
-    <string name="reminde_me_every">Remind me every %s...ish</string>
+    <string name="remind_me_every">Remind me every %s...ish</string>
+    <string name="remind_me_once">Remind me in one %s...ish</string>
     <string name="time">Time</string>
     <string name="day">day</string>
     <string name="week">week</string>
@@ -26,5 +27,9 @@
     <string name="evening">Evening</string>
     <string name="any">Any</string>
     <string name="save">Save</string>
+    <string name="daily">daily</string>
+    <string name="weekly">weekly</string>
+    <string name="monthly">Monthly</string>
+    <string name="repeat">Repeat</string>
 
 </resources>

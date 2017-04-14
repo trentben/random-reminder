@@ -22,6 +22,7 @@ public class Reminder extends RealmObject {
     private int id;
     private long createdAt;
     private boolean isEnabled;
+    private boolean isRepeat;
     private String title;
     private int frequency;
     private int alarmTimeOfDay;
@@ -33,6 +34,7 @@ public class Reminder extends RealmObject {
         id = UUID.randomUUID().hashCode();
         createdAt = new Date().getTime();
         isEnabled = true;
+        isRepeat = true;
     }
 
     public String getTitle() {
@@ -89,5 +91,13 @@ public class Reminder extends RealmObject {
 
     public void setEnabled(boolean disabled) {
         isEnabled = disabled;
+    }
+
+    public boolean isRepeat() {
+        return isRepeat;
+    }
+
+    public void setRepeat(boolean repeat) {
+        isRepeat = repeat;
     }
 }

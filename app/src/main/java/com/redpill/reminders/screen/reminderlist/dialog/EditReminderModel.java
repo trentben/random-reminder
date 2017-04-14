@@ -17,21 +17,23 @@ public class EditReminderModel {
         mManager = new ReminderManager(context);
     }
 
-    public void createNewReminder(String title, int selectedFrequency, int timeOfDay) {
+    public void createNewReminder(String title, int selectedFrequency, int timeOfDay, boolean isRepeat) {
         mReminder = mManager.createReminder(title);
         mManager.getRealm().executeTransaction(realm -> {
             mReminder.setFrequency(selectedFrequency);
             mReminder.setAlarmTimeOfDay(timeOfDay);
+            mReminder.setRepeat(isRepeat);
         });
         mManager.updateReminderTime(mReminder);
     }
 
-    public void updateReminder(String title, int selectedFrequency, int timeOfDay) {
+    public void updateReminder(String title, int selectedFrequency, int timeOfDay, boolean isRepeat) {
         if (mReminder != null) {
             mManager.getRealm().executeTransaction(realm -> {
                 mReminder.setTitle(title);
                 mReminder.setFrequency(selectedFrequency);
                 mReminder.setAlarmTimeOfDay(timeOfDay);
+                mReminder.setRepeat(isRepeat);
             });
             mManager.updateReminderTime(mReminder);
         } else {
@@ -57,5 +59,9 @@ public class EditReminderModel {
 
     public Reminder getReminder() {
         return mReminder;
+    }
+
+    public boolean getIsRepeat() {
+        return mReminder.isRepeat();
     }
 }

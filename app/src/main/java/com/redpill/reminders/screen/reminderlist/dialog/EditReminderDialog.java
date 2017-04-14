@@ -5,17 +5,15 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.widget.AppCompatEditText;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.redpill.reminders.R;
@@ -23,12 +21,10 @@ import com.redpill.reminders.callback.ObjectCallback;
 import com.redpill.reminders.model.Reminder;
 import com.redpill.reminders.util.Constant;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 public class EditReminderDialog extends DialogFragment implements EditReminderView {
@@ -40,6 +36,7 @@ public class EditReminderDialog extends DialogFragment implements EditReminderVi
     @BindView(R.id.freq_medium_button) Button mMediumButton;
     @BindView(R.id.freq_high_button) Button mHighButton;
     @BindView(R.id.time_of_day_spinner) Spinner mTimeOfDaySpinner;
+    @BindView(R.id.repeat_checkbox) CheckBox mRepeatCheckBox;
     @BindView(R.id.add_button) Button mAddButton;
     @BindView(R.id.update_button) Button mUpdateButton;
     @BindView(R.id.cancel_button) Button mCancelButton;
@@ -128,6 +125,11 @@ public class EditReminderDialog extends DialogFragment implements EditReminderVi
         mPresenter.onDeleteReminder();
     }
 
+    @OnCheckedChanged(R.id.repeat_checkbox)
+    public void onRepeatCheckChange() {
+        updateFreqDurationText();
+    }
+
     //View Methods
 
     @Override
@@ -163,24 +165,7 @@ public class EditReminderDialog extends DialogFragment implements EditReminderVi
         mMediumButton.setBackground(mMediumBackgroundGrey);
         mLowButton.setBackground(mLowBackgroundGrey);
 
-        String freqDuration = "";
-
-        switch (freq) {
-            case FREQUENCY_HIGH:
-                mHighButton.setBackground(mHighBackground);
-                freqDuration = getString(R.string.day);
-                break;
-            case FREQUENCY_MEDIUM:
-                mMediumButton.setBackground(mMediumBackground);
-                freqDuration = getString(R.string.week);
-                break;
-            case FREQUENCY_LOW:
-                mLowButton.setBackground(mLowBackground);
-                freqDuration = getString(R.string.month);
-                break;
-        }
-
-        mFrequencyText.setText(String.format(getString(R.string.reminde_me_every), freqDuration));
+        updateFreqDurationText();
     }
 
     @Override
@@ -191,6 +176,16 @@ public class EditReminderDialog extends DialogFragment implements EditReminderVi
     @Override
     public void setTimeOfDay(int timeOfDay) {
         mTimeOfDaySpinner.setSelection(timeOfDay);
+    }
+
+    @Override
+    public boolean isRepeat() {
+        return mRepeatCheckBox.isChecked();
+    }
+
+    @Override
+    public void setRepeat(boolean isRepeat) {
+        mRepeatCheckBox.setChecked(isRepeat);
     }
 
     @Override
@@ -233,5 +228,29 @@ public class EditReminderDialog extends DialogFragment implements EditReminderVi
         mOnDeleteListener = callback;
     }
 
+    private void updateFreqDurationText() {
+        String freqDuration = "";
+
+        switch (mSelectedFrequency) {
+            case FREQUENCY_HIGH:
+                mHighButton.setBackground(mHighBackground);
+                freqDuration = getString(R.string.day);
+                break;
+            case FREQUENCY_MEDIUM:
+                mMediumButton.setBackground(mMediumBackground);
+                freqDuration = getString(R.string.week);
+                break;
+            case FREQUENCY_LOW:
+                mLowButton.setBackground(mLowBackground);
+                freqDuration = getString(R.string.month);
+                break;
+        }
+
+        if (isRepeat()) {
+            mFrequencyText.setText(String.format(getString(R.string.remind_me_every), freqDuration));
+        } else {
+            mFrequencyText.setText(String.format(getString(R.string.remind_me_once), freqDuration));
+        }
+    }
 
 }

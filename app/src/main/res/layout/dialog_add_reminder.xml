@@ -16,7 +16,7 @@
             android:id="@+id/freq_high_button"
             android:layout_width="match_parent"
             android:layout_weight="1"
-            android:text="@string/day"
+            android:text="@string/daily"
             android:elevation="0dp"
             />
         <Button
@@ -24,7 +24,7 @@
             android:id="@+id/freq_medium_button"
             android:layout_width="match_parent"
             android:layout_weight="1"
-            android:text="@string/week"
+            android:text="@string/weekly"
             android:elevation="0dp"
             />
         <Button
@@ -32,7 +32,7 @@
             android:id="@+id/freq_low_button"
             android:layout_width="match_parent"
             android:layout_weight="1"
-            android:text="@string/month"
+            android:text="@string/monthly"
             android:elevation="0dp"/>
 
     </LinearLayout>
@@ -59,15 +59,16 @@
             android:id="@+id/frequency_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_gravity="center"
             android:layout_marginBottom="2dp"
-            android:text="@string/reminde_me_every"/>
+            android:text="@string/remind_me_every"/>
 
         <EditText
             android:id="@+id/title_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:inputType="textCapSentences"
             android:textColorHighlight="@color/colorAccent"
             android:hint="Title"/>
 
@@ -83,7 +84,15 @@
             android:id="@+id/time_of_day_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/time_of_day_array"></Spinner>
+            android:entries="@array/time_of_day_array"/>
+
+        <CheckBox
+            android:id="@+id/repeat_checkbox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="12dp"
+            android:checked="true"
+            android:text="@string/repeat"/>
     </LinearLayout>
 
 

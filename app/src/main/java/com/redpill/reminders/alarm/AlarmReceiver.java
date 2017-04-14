@@ -33,7 +33,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         showNotification(context, reminder);
 
         mManager.recordAlarmHistory(reminder, reminder.getRemindAt());
-        mManager.updateReminderTime(reminder);
+        mManager.updateReminderEnabled(reminder, reminder.isRepeat());
     }
 
     private void showNotification(Context context, Reminder reminder) {
