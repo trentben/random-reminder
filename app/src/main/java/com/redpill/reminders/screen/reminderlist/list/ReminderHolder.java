@@ -1,6 +1,7 @@
 package com.redpill.reminders.screen.reminderlist.list;
 
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
@@ -43,6 +44,7 @@ public class ReminderHolder extends RecyclerView.ViewHolder {
 
     private ObjectCallback<Reminder> mOnClickListener;
     private ReminderListAdapter.OnOptionClickListener mOnOptionClickListener;
+    private ReminderListAdapter.OnReminderItemInteractionLister mOnEnableSwitchListener;
 
     private View mItemView;
     private Reminder mReminder;
@@ -132,6 +134,10 @@ public class ReminderHolder extends RecyclerView.ViewHolder {
         mOnOptionClickListener = onOptionClickListener;
     }
 
+    public void setOnReminderItemInteractionLister(ReminderListAdapter.OnReminderItemInteractionLister listener) {
+        mOnEnableSwitchListener = listener;
+    }
+
     @OnClick(R.id.card)
     public void onClick() {
         if (mOnClickListener != null) {
@@ -148,7 +154,7 @@ public class ReminderHolder extends RecyclerView.ViewHolder {
 
     private void onEnableSwitchChange(CompoundButton compoundButton, boolean isEnabled) {
         if (isEnabled != mReminder.isEnabled()) {
-
+            new Handler().postDelayed(() -> mOnEnableSwitchListener.onEnableSwitchChange(mReminder, isEnabled), 300);
         }
     }
 

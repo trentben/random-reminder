@@ -57,6 +57,15 @@ public class ReminderManager {
 
     }
 
+    public void updateReminderEnabled(Reminder reminder, boolean isEnabled) {
+        getRealm().executeTransaction(realm -> reminder.setEnabled(isEnabled));
+        if (isEnabled) {
+            updateReminderTime(reminder);
+        } else {
+            mScheduler.removeAlarm(reminder);
+        }
+    }
+
     private void _updateReminderTime(Reminder reminder) {
         reminder.setRemindAt(generateReminderTime(reminder));
         mScheduler.scheduleAlarm(reminder);

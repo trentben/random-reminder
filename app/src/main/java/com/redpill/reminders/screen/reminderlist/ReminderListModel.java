@@ -25,4 +25,8 @@ public class ReminderListModel {
     public void deleteReminder(Reminder reminder) {
         mRealm.removeReminder(reminder.getId());
     }
+
+    public void updateReminderEnable(Reminder reminder, boolean enable) {
+        mRealm.updateReminderEnabled(reminder, enable);
+    }
 }

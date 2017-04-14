@@ -19,6 +19,7 @@ public class ReminderListAdapter extends RecyclerView.Adapter<ReminderHolder> {
 
     private ObjectCallback<Reminder> mOnClickListener;
     private OnOptionClickListener mOnOptionClickListener;
+    private OnReminderItemInteractionLister mOnEnableSwitchListener;
 
     private RealmResults<Reminder> mReminders;
 
@@ -41,6 +42,7 @@ public class ReminderListAdapter extends RecyclerView.Adapter<ReminderHolder> {
     public void onBindViewHolder(ReminderHolder holder, int position) {
         holder.setOnClickListener(mOnClickListener);
         holder.setOnOptionClickListener(mOnOptionClickListener);
+        holder.setOnReminderItemInteractionLister(mOnEnableSwitchListener);
         holder.bind(mReminders.get(position));
     }
 
@@ -53,17 +55,26 @@ public class ReminderListAdapter extends RecyclerView.Adapter<ReminderHolder> {
         mOnClickListener = listener;
     }
 
+    public void setOnEnableSwitchListener(OnReminderItemInteractionLister listener) {
+        mOnEnableSwitchListener = listener;
+    }
+
     public void setOnOptionClickListener(OnOptionClickListener onOptionClickListener) {
         mOnOptionClickListener = onOptionClickListener;
+    }
+
+
+    @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        mReminders.removeAllChangeListeners();
     }
 
     public interface OnOptionClickListener {
         void onOptionClick(Reminder reminder, View view);
     }
 
-    @Override
-    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView);
-        mReminders.removeAllChangeListeners();
+    public interface OnReminderItemInteractionLister {
+        void onEnableSwitchChange(Reminder reminder, boolean enable);
     }
 }

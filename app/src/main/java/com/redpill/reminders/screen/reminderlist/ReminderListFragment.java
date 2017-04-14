@@ -71,6 +71,10 @@ public class ReminderListFragment extends Fragment implements ReminderListView{
         mPresenter.onReminderClick(reminder);
     }
 
+    private void onEnableSwitchChange(Reminder reminder, boolean b) {
+        mPresenter.onReminderEnableChange(reminder, b);
+    }
+
     private void onReminderOptionClick(Reminder reminder, View view) {
         PopupMenu popupMenu = new PopupMenu(getContext(), view);
         popupMenu.inflate(R.menu.list_item_menu);
@@ -127,10 +131,12 @@ public class ReminderListFragment extends Fragment implements ReminderListView{
         mAdapter = new ReminderListAdapter();
         mAdapter.setOnOptionClickListener(this::onReminderOptionClick);
         mAdapter.setOnClickListener(this::onReminderItemClick);
+        mAdapter.setOnEnableSwitchListener(this::onEnableSwitchChange);
 
         mReminderRecyView.setAdapter(mAdapter);
 
     }
+
 
 
 }

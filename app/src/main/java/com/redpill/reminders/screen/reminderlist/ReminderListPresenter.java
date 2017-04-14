@@ -28,4 +28,8 @@ public class ReminderListPresenter {
     public void onReminderClick(Reminder reminder) {
         mView.showEditReminderDialog(reminder);
     }
+
+    public void onReminderEnableChange(Reminder reminder, boolean enable) {
+        mModel.updateReminderEnable(reminder, enable);
+    }
 }
