@@ -9,10 +9,10 @@
     <color name="dividerColor">#BDBDBD</color>
 
     <!-- Frequency Button Colors -->
-    <color name="freq_high">#BF360C</color>
+    <color name="freq_low">#BF360C</color>
     <color name="freq_medium">#F57C00</color>
-    <color name="freq_low">#FBC02D</color>
-    <color name="freq_high_grey">#757575</color>
+    <color name="freq_high">#FBC02D</color>
+    <color name="freq_low_grey">#757575</color>
     <color name="freq_medium_grey">#9e9e9e</color>
-    <color name="freq_low_grey">#BDBDBD</color>
+    <color name="freq_high_grey">#BDBDBD</color>
 </resources>
