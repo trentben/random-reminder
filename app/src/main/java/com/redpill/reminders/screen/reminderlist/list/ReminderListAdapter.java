@@ -29,7 +29,7 @@ public class ReminderListAdapter extends RecyclerView.Adapter<ReminderHolder> {
 
     public void setReminderList(RealmResults<Reminder> reminders) {
         mReminders = reminders;
-        mReminders.addChangeListener(element -> notifyDataSetChanged());
+        autoUpdateData(true);
     }
 
     @Override
@@ -68,6 +68,14 @@ public class ReminderListAdapter extends RecyclerView.Adapter<ReminderHolder> {
     public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
         super.onDetachedFromRecyclerView(recyclerView);
         mReminders.removeAllChangeListeners();
+    }
+
+    public void autoUpdateData(boolean isEnabled) {
+        mReminders.removeAllChangeListeners();
+
+        if (isEnabled) {
+            mReminders.addChangeListener(element -> notifyDataSetChanged());
+        }
     }
 
     public interface OnOptionClickListener {

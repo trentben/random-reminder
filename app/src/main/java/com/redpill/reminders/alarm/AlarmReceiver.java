@@ -37,19 +37,18 @@ public class AlarmReceiver extends BroadcastReceiver {
     }
 
     private void showNotification(Context context, Reminder reminder) {
+        int reminderId = reminder.getId();
+
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setContentTitle(reminder.getTitle())
-                        .setContentIntent(getReminderIntent(context, reminder.getId()))
+                        .setContentIntent(getReminderIntent(context, reminderId))
                         .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
-//                        .setAutoCancel(true)
-                        .addAction(0, "DISABLE", null);
+                        .setAutoCancel(true)
+                        .addAction(0, "DISABLE", getDisableReminderIntent(context, reminderId));
 
-        int notificationId = reminder.getId();
-        NotificationManager mNotifyMgr =
-                (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-        mNotifyMgr.notify(notificationId, mBuilder.build());
+        getNotificationManager(context).notify(reminderId, mBuilder.build());
     }
 
     private PendingIntent getReminderIntent(Context context, int reminderId) {
@@ -58,9 +57,17 @@ public class AlarmReceiver extends BroadcastReceiver {
         return PendingIntent.getActivity(context, reminderId, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT);
     }
 
+    private PendingIntent getDisableReminderIntent(Context context, int reminderId) {
+        Intent intent = DisableReminderService.getStartIntent(context, reminderId);
+        return PendingIntent.getService(context, reminderId, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT );
+    }
+
     private Reminder getReminderFromIntent(Intent intent) {
         int reminderId = intent.getIntExtra(REMINDER_ID, 0);
         return mManager.getReminderById(reminderId);
     }
 
+    private NotificationManager getNotificationManager(Context context) {
+        return (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+    }
 }

@@ -31,5 +31,7 @@
     <string name="weekly">weekly</string>
     <string name="monthly">Monthly</string>
     <string name="repeat">Repeat</string>
+    <string name="reminder_diabled">Reminder Disabled</string>
+    <string name="unable_to_disable_reminder">Unable To Disable Reminder</string>
 
 </resources>

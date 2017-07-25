@@ -7,6 +7,7 @@ import com.redpill.reminders.model.AlarmHistory;
 import com.redpill.reminders.model.Reminder;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 import io.realm.Realm;
