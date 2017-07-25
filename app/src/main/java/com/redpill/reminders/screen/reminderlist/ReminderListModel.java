@@ -2,7 +2,6 @@ package com.redpill.reminders.screen.reminderlist;
 
 import android.content.Context;
 
-import com.redpill.reminders.alarm.AlarmScheduler;
 import com.redpill.reminders.model.Reminder;
 import com.redpill.reminders.realm.ReminderManager;
 
@@ -27,6 +26,11 @@ public class ReminderListModel {
     }
 
     public void updateReminderEnable(Reminder reminder, boolean enable) {
-        mRealm.updateReminderEnabled(reminder, enable);
+        mRealm.enableReminder(reminder, enable);
+    }
+
+    public void onDestroy() {
+        mRealm.close();
+        mRealm = null;
     }
 }

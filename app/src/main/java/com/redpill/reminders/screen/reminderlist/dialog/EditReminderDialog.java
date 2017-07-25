@@ -87,6 +87,13 @@ public class EditReminderDialog extends DialogFragment implements EditReminderVi
         super.onResume();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.onDestroy();
+        mPresenter = null;
+    }
+
     @OnClick(R.id.freq_low_button)
     public void onLowFreqClick() {
         setSelectedFrequency(FREQUENCY_LOW);

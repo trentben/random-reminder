@@ -38,4 +38,9 @@ public class EditReminderPresenter {
     public void onDeleteReminder() {
         mView.navigateToDelete(mModel.getReminder());
     }
+
+    public void onDestroy() {
+        mModel.onDestroy();
+        mModel = null;
+    }
 }

@@ -2,11 +2,8 @@ package com.redpill.reminders.screen.reminderlist.dialog;
 
 import android.content.Context;
 
-import com.redpill.reminders.alarm.AlarmScheduler;
 import com.redpill.reminders.model.Reminder;
 import com.redpill.reminders.realm.ReminderManager;
-
-import io.realm.Realm;
 
 public class EditReminderModel {
 
@@ -24,7 +21,7 @@ public class EditReminderModel {
             mReminder.setAlarmTimeOfDay(timeOfDay);
             mReminder.setRepeat(isRepeat);
         });
-        mManager.updateReminderTime(mReminder);
+        mManager.scheduleReminderAlarm(mReminder);
     }
 
     public void updateReminder(String title, int selectedFrequency, int timeOfDay, boolean isRepeat) {
@@ -35,7 +32,7 @@ public class EditReminderModel {
                 mReminder.setAlarmTimeOfDay(timeOfDay);
                 mReminder.setRepeat(isRepeat);
             });
-            mManager.updateReminderTime(mReminder);
+            mManager.scheduleReminderAlarm(mReminder);
         } else {
             throw new RuntimeException("You must set a reminder using setReminderToUpdate() before calling updateReminder()");
         }
@@ -63,5 +60,10 @@ public class EditReminderModel {
 
     public boolean getIsRepeat() {
         return mReminder.isRepeat();
+    }
+
+    public void onDestroy() {
+        mManager.close();
+        mManager = null;
     }
 }

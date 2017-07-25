@@ -25,10 +25,7 @@ public class ReminderManager {
     }
 
     public RealmResults<Reminder> getReminders() {
-        Realm realm = Realm.getDefaultInstance();
-        RealmResults<Reminder> results = realm.where(Reminder.class).findAllSorted("createdAt");
-        realm.close();
-        return results;
+        return mRealm.where(Reminder.class).findAllSorted("createdAt");
     }
 
     public Reminder getReminderById(int reminderId) {
@@ -51,33 +48,33 @@ public class ReminderManager {
     }
 
 
-    public void updateReminderTime(Reminder reminder) {
+    public void scheduleReminderAlarm(Reminder reminder) {
         mRealm.executeTransaction(realm -> {
-            _updateReminderTime(reminder);
+            reminder.setRemindAt(generateReminderTime(reminder));
+            mScheduler.scheduleAlarm(reminder);
         });
 
     }
 
-    public void updateReminderEnabled(Reminder reminder, boolean isEnabled) {
+    public void enableReminder(Reminder reminder, boolean isEnabled) {
         getRealm().executeTransaction(realm -> reminder.setEnabled(isEnabled));
         if (isEnabled) {
-            updateReminderTime(reminder);
+            scheduleReminderAlarm(reminder);
         } else {
             mScheduler.removeAlarm(reminder);
         }
     }
 
-    private void _updateReminderTime(Reminder reminder) {
-        reminder.setRemindAt(generateReminderTime(reminder));
-        mScheduler.scheduleAlarm(reminder);
-    }
+
 
     public Reminder createReminder(String title) {
         mRealm.beginTransaction();
         Reminder reminder = mRealm.createObject(Reminder.class);
         reminder.setTitle(title);
-        _updateReminderTime(reminder);
         mRealm.commitTransaction();
+
+        scheduleReminderAlarm(reminder);
+
         return reminder;
     }
 
@@ -130,6 +127,11 @@ public class ReminderManager {
             time.add(Calendar.DATE, 1);
         }
 
+//        return new Date().getTime() + 10000;
         return time.getTimeInMillis();
+    }
+
+    public void close() {
+        mRealm.close();
     }
 }

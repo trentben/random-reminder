@@ -2,20 +2,12 @@ package com.redpill.reminders.alarm;
 
 import android.app.IntentService;
 import android.app.NotificationManager;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.redpill.reminders.R;
 import com.redpill.reminders.model.Reminder;
 import com.redpill.reminders.realm.ReminderManager;
-
-import io.realm.Realm;
 
 public class DisableReminderService extends IntentService {
 
@@ -42,16 +34,22 @@ public class DisableReminderService extends IntentService {
 
         Reminder reminder = getReminderFromIntent(intent);
         if (reminder != null) {
-            mReminderManager.updateReminderEnabled(reminder, false);
+            mReminderManager.enableReminder(reminder, false);
 
             //Cancel the notification that started this Service
             getNotificationManager(getApplicationContext()).cancel(reminder.getId());
         }
+
+        closeReminderManager();
     }
 
     private void initReminderManager() {
         mReminderManager = new ReminderManager(getApplicationContext());
+    }
 
+    private void closeReminderManager() {
+        mReminderManager.close();
+        mReminderManager = null;
     }
 
     private Reminder getReminderFromIntent(Intent intent) {

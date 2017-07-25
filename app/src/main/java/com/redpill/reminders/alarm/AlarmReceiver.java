@@ -6,7 +6,6 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 
 import com.redpill.reminders.R;
@@ -14,8 +13,6 @@ import com.redpill.reminders.model.Reminder;
 import com.redpill.reminders.realm.ReminderManager;
 import com.redpill.reminders.screen.home.HomeActivity;
 import com.redpill.reminders.util.Constant;
-
-import io.realm.Realm;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 
@@ -33,7 +30,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         showNotification(context, reminder);
 
         mManager.recordAlarmHistory(reminder, reminder.getRemindAt());
-        mManager.updateReminderEnabled(reminder, reminder.isRepeat());
+        mManager.enableReminder(reminder, reminder.isRepeat());
     }
 
     private void showNotification(Context context, Reminder reminder) {

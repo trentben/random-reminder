@@ -4,8 +4,8 @@ import com.redpill.reminders.model.Reminder;
 
 public class ReminderListPresenter {
 
-    private final ReminderListView mView;
-    private final ReminderListModel mModel;
+    private ReminderListView mView;
+    private ReminderListModel mModel;
 
     public ReminderListPresenter(ReminderListView view, ReminderListModel model) {
         mView = view;
@@ -31,5 +31,10 @@ public class ReminderListPresenter {
 
     public void onReminderEnableChange(Reminder reminder, boolean enable) {
         mModel.updateReminderEnable(reminder, enable);
+    }
+
+    public void onDestroy() {
+        mModel.onDestroy();
+        mModel = null;
     }
 }

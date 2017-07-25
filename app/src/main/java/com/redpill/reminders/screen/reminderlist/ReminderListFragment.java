@@ -57,6 +57,8 @@ public class ReminderListFragment extends Fragment implements ReminderListView{
     public void onDestroyView() {
         super.onDestroyView();
         mUnbinder.unbind();
+        mPresenter.onDestroy();
+        mPresenter = null;
     }
 
     //OnClick Methods
