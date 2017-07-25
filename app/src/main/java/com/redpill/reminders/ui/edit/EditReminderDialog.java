@@ -1,4 +1,4 @@
-package com.redpill.reminders.ui.reminderlist.dialog;
+package com.redpill.reminders.ui.edit;
 
 import android.app.Dialog;
 import android.graphics.drawable.Drawable;

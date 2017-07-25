@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import com.redpill.reminders.R;
 import com.redpill.reminders.model.callback.ObjectCallback;
 import com.redpill.reminders.model.data.Reminder;
-import com.redpill.reminders.ui.reminderlist.dialog.EditReminderDialog;
+import com.redpill.reminders.ui.edit.EditReminderDialog;
 import com.redpill.reminders.ui.reminderlist.list.ReminderListAdapter;
 import com.redpill.reminders.util.Constant;
 
