@@ -7,6 +7,7 @@ import com.redpill.reminders.model.data.AlarmHistory;
 import com.redpill.reminders.model.data.Reminder;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 import io.realm.Realm;
@@ -63,8 +64,6 @@ public class ReminderManager {
             mScheduler.removeAlarm(reminder);
         }
     }
-
-
 
     public Reminder createReminder(String title) {
         mRealm.beginTransaction();

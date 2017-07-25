@@ -40,7 +40,7 @@ public class ReminderListFragment extends Fragment implements ReminderListView{
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_reminder_list, container, false);
         mUnbinder = ButterKnife.bind(this, view);
-        mPresenter = new ReminderListPresenter(this, new ReminderListModel(getContext()));
+        mPresenter = new ReminderListPresenter(this, new ReminderListModel());
         init();
 
         return view;

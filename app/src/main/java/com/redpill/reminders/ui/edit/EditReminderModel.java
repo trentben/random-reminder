@@ -3,15 +3,19 @@ package com.redpill.reminders.ui.edit;
 import android.content.Context;
 
 import com.redpill.reminders.model.data.Reminder;
+import com.redpill.reminders.service.dagger.Injector;
 import com.redpill.reminders.service.realm.ReminderManager;
+
+import javax.inject.Inject;
 
 public class EditReminderModel {
 
-    private ReminderManager mManager;
+    @Inject ReminderManager mManager;
+
     private Reminder mReminder;
 
-    public EditReminderModel(Context context) {
-        mManager = new ReminderManager(context);
+    public EditReminderModel() {
+        Injector.get().inject(this);
     }
 
     public void createNewReminder(String title, int selectedFrequency, int timeOfDay, boolean isRepeat) {

@@ -1,36 +1,35 @@
 package com.redpill.reminders.ui.reminderlist;
 
-import android.content.Context;
-
 import com.redpill.reminders.model.data.Reminder;
+import com.redpill.reminders.service.dagger.Injector;
 import com.redpill.reminders.service.realm.ReminderManager;
+
+import javax.inject.Inject;
 
 import io.realm.RealmResults;
 
 public class ReminderListModel {
 
-    private Context mContext;
-    private ReminderManager mRealm;
+    @Inject ReminderManager mManager;
 
-    public ReminderListModel(Context context) {
-        mContext = context;
-        mRealm = new ReminderManager(mContext);
+    public ReminderListModel() {
+        Injector.get().inject(this);
     }
 
     public RealmResults<Reminder> getReminders() {
-        return mRealm.getReminders();
+        return mManager.getReminders();
     }
 
     public void deleteReminder(Reminder reminder) {
-        mRealm.removeReminder(reminder.getId());
+        mManager.removeReminder(reminder.getId());
     }
 
     public void updateReminderEnable(Reminder reminder, boolean enable) {
-        mRealm.enableReminder(reminder, enable);
+        mManager.enableReminder(reminder, enable);
     }
 
     public void onDestroy() {
-        mRealm.close();
-        mRealm = null;
+        mManager.close();
+        mManager = null;
     }
 }

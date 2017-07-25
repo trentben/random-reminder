@@ -7,14 +7,17 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 
 import com.redpill.reminders.model.data.Reminder;
+import com.redpill.reminders.service.dagger.Injector;
 import com.redpill.reminders.service.realm.ReminderManager;
+
+import javax.inject.Inject;
 
 public class DisableReminderService extends IntentService {
 
     public static final String EXTRA_REMINDER_ID = "ReminderId";
     private static final String TAG = "DisableReminderService";
 
-    private ReminderManager mReminderManager;
+    @Inject ReminderManager mReminderManager;
 
     public static Intent getStartIntent(Context context, int reminderId) {
         Intent intent = new Intent(context, DisableReminderService.class);
@@ -30,7 +33,7 @@ public class DisableReminderService extends IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        initReminderManager();
+        Injector.get().inject(this);
 
         Reminder reminder = getReminderFromIntent(intent);
         if (reminder != null) {
@@ -43,9 +46,9 @@ public class DisableReminderService extends IntentService {
         closeReminderManager();
     }
 
-    private void initReminderManager() {
-        mReminderManager = new ReminderManager(getApplicationContext());
-    }
+//    private void initReminderManager() {
+//        mReminderManager = new ReminderManager(getApplicationContext());
+//    }
 
     private void closeReminderManager() {
         mReminderManager.close();

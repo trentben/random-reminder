@@ -73,7 +73,7 @@ public class EditReminderDialog extends DialogFragment implements EditReminderVi
         handleArguments();
         init(mIsUpdateMode);
 
-        mPresenter = new EditReminderPresenter(this, new EditReminderModel(getContext()));
+        mPresenter = new EditReminderPresenter(this, new EditReminderModel());
         return view;
     }
 
