@@ -14,18 +14,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".screen.home.HomeActivity">
+        <activity android:name=".ui.home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".alarm.DisableReminderService"
+        <service android:name=".service.alarm.DisableReminderService"
             android:exported="false"/>
 
-        <receiver android:name=".alarm.AlarmReceiver"/>
-        <receiver android:name=".alarm.BootReceiver">
+        <receiver android:name=".service.alarm.AlarmReceiver"/>
+        <receiver android:name=".service.alarm.BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>

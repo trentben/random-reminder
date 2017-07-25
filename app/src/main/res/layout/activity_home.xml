@@ -4,9 +4,9 @@
     android:id="@+id/activity_home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.redpill.reminders.screen.home.HomeActivity">
+    tools:context="com.redpill.reminders.ui.home.HomeActivity">
 
-    <fragment android:name="com.redpill.reminders.screen.reminderlist.ReminderListFragment"
+    <fragment android:name="com.redpill.reminders.ui.reminderlist.ReminderListFragment"
         android:id="@+id/frag_reminder_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
